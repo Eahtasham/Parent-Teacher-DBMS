@@ -14,7 +14,7 @@ export function useAuth() {
       try {
         const response = await fetch('/api/auth/check');
         const data = await response.json();
-        
+
         if (data.user) {
           setUser(data.user);
         } else {

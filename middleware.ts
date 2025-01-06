@@ -4,8 +4,8 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const user = request.cookies.get('user');
 
-//   console.log('Pathname:', request.nextUrl.pathname);
-//   console.log('User cookie:', user);
+  console.log('Pathname:', request.nextUrl.pathname);
+  console.log('User cookie:', user);
 
 
   // Protect dashboard routes
