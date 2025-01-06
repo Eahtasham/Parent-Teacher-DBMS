@@ -18,7 +18,7 @@ export function useAuth() {
         if (data.user) {
           setUser(data.user);
         } else {
-          router.push('/login');
+          // router.push('/login');
         }
       } catch (error) {
         console.error('Auth check failed:', error);
