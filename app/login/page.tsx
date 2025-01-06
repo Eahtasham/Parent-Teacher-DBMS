@@ -38,7 +38,7 @@ export default function LoginPage() {
       if (data.success) {
         // router.push(role === 'parent' ? '/parent/dashboard' : '/teacher/dashboard');
         const redirectURL = role === 'parent' ? '/parent/dashboard' : '/teacher/dashboard';
-        console.log('Redirecting to:', redirectURL);
+        console.log('o:', redirectURL);
         router.push(redirectURL);
       } else {
         toast.error(data.message || 'Login failed');
