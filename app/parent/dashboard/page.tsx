@@ -344,7 +344,8 @@ export default function ParentDashboard() {
                               "bg-yellow-300 text-yellow-800": meeting.status === 'pending'
                             }
                           )}>
-                            {meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
+                            {meeting.status=== 'accept' && "Accepted"}
+                            {meeting.status=== 'rejected' || meeting.status==='pending' && meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
                           </span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
@@ -394,7 +395,7 @@ export default function ParentDashboard() {
               <div className="bg-green-50 p-4 rounded-lg space-y-2">
                 <div className="flex items-center gap-2 text-green-800">
                   <CalendarIcon className="w-4 h-4" />
-                  <span>Meeting Details:</span>
+                  <span>Meeting Details Sumbitted</span>
                 </div>
               </div>
               <p className="text-sm text-gray-500">
