@@ -4,8 +4,8 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const user = request.cookies.get('user');
 
-//   console.log('Pathname:', request.nextUrl.pathname);
-//   console.log('User cookie:', user);
+  console.log('Pathname:', request.nextUrl.pathname);
+  console.log('User cookie:', user);
 
 
   // Protect dashboard routes
@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    // console.log(user);
+    console.log(user);
 
     // Check correct role access
     const userData = user.value ? JSON.parse(user.value) : null;
