@@ -11,9 +11,9 @@ export function middleware(request: NextRequest) {
   // Protect dashboard routes
   if (request.nextUrl.pathname.startsWith('/parent/dashboard') || 
       request.nextUrl.pathname.startsWith('/teacher/dashboard')) {
-    // if (!user) {
-    //   return NextResponse.redirect(new URL('/login', request.url));
-    // }
+    if (!user) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
 
     console.log(user);
 
