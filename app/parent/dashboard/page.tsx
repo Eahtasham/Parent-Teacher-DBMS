@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
-import { Book, Calendar as CalendarIcon, CheckCircle2, ChevronRight, Clock, MessageSquare, User } from 'lucide-react';
+import { Book, Calendar as CalendarIcon, CheckCircle2, ChevronRight, Clock, LogOut, MessageSquare, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import {
@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
   AlertDialogFooter
 } from '@/components/ui/alert-dialog';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 interface Teacher {
   id: number;
@@ -58,7 +59,7 @@ const subjects = [
 
 
 export default function ParentDashboard() {
-  const { user, loading } = useAuth();
+  const { user, loading,logout } = useAuth();
   const [date, setDate] = useState<Date>();
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
@@ -186,6 +187,33 @@ export default function ParentDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-4 md:p-8">
+      <header className="max-w-7xl mx-auto bg-white/80 backdrop-blur-sm shadow-sm mb-5">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <Avatar className="h-10 w-10">
+                <AvatarFallback className="bg-indigo-600 text-white">
+                  {user?.username?.charAt(0).toUpperCase() || 'P'}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h2 className="font-semibold text-gray-800">{user?.username}</h2>
+                <p className="text-sm text-gray-500">Teacher</p>
+              </div>
+            </div>
+            <Button 
+              variant="outline" 
+              className="flex items-center space-x-2"
+              onClick={() => logout?.()}
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Logout</span>
+            </Button>
+          </div>
+        </div>
+      </header>
+
+
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
         {/* Schedule Meeting Section */}
         <div className="w-full lg:w-3/5">
