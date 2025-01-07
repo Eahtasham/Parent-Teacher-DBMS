@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 interface PortalCardProps {
   href: string;
-  icon: LucideIcon;
+  icon: any;
   title: string;
   description: string;
   gradientFrom: string;
@@ -17,7 +17,7 @@ interface PortalCardProps {
 
 const PortalCard: React.FC<PortalCardProps> = ({
   href,
-  icon: Icon,
+  icon,
   title,
   description,
   gradientFrom,
@@ -29,7 +29,7 @@ const PortalCard: React.FC<PortalCardProps> = ({
       <Card className="overflow-hidden bg-white/90 backdrop-blur-lg border-0 shadow-2xl">
         <CardContent className="p-8">
           <div className={`flex items-center justify-center w-20 h-20 rounded-2xl mb-8 bg-gradient-to-br from-${gradientFrom} to-${gradientTo} shadow-lg transform -rotate-3 hover:rotate-0 transition-transform duration-300`}>
-            <Icon className="w-10 h-10 text-white" />
+            {icon}
           </div>
 
           <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">

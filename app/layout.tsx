@@ -7,7 +7,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Parent-Teacher Portal',
   description: 'A platform for parent-teacher interaction and meeting scheduling',
-  icons: "https://fonts.gstatic.com/icon/font?kit=kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsKTCIoqcX_0kt8iUb8wgw&skey=b8dc2088854b122f&v=v222"
+  icons: {
+    icon: 'user-solid.svg',
+    apple: '/icon.png',
+  },
 };
 
 export default function RootLayout({
