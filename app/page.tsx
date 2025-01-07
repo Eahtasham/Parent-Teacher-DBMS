@@ -1,61 +1,137 @@
 'use client';
 
-import { GraduationCap, Users } from 'lucide-react';
+import { GraduationCap, Users, ArrowRight, TypeIcon as type, LucideIcon } from 'lucide-react';
 import Link from 'next/link';
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from 'framer-motion';
+
+interface PortalCardProps {
+  href: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  gradientFrom: string;
+  gradientTo: string;
+  buttonColor: string;
+}
+
+const PortalCard: React.FC<PortalCardProps> = ({
+  href,
+  icon: Icon,
+  title,
+  description,
+  gradientFrom,
+  gradientTo,
+  buttonColor
+}) => (
+  <Link href={href} className="block">
+    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="h-full">
+      <Card className="overflow-hidden bg-white/90 backdrop-blur-lg border-0 shadow-2xl">
+        <CardContent className="p-8">
+          <div className={`flex items-center justify-center w-20 h-20 rounded-2xl mb-8 bg-gradient-to-br from-${gradientFrom} to-${gradientTo} shadow-lg transform -rotate-3 hover:rotate-0 transition-transform duration-300`}>
+            <Icon className="w-10 h-10 text-white" />
+          </div>
+
+          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            {title}
+          </h2>
+          
+          <p className="text-gray-600 text-lg mb-8">
+            {description}
+          </p>
+          
+          <motion.div
+            whileHover={{ x: 5 }}
+            className={`inline-flex items-center px-6 py-3 rounded-xl text-white ${
+              buttonColor === 'purple' 
+                ? 'bg-gradient-to-r from-purple-600 to-purple-500' 
+                : 'bg-gradient-to-r from-indigo-600 to-indigo-500'
+            } shadow-lg hover:shadow-xl transition-all duration-300`}
+          >
+            <span className="mr-2">Login as {title.split(' ')[0]}</span>
+            <ArrowRight className="w-5 h-5" />
+          </motion.div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  </Link>
+);
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
+    <main className="min-h-screen relative overflow-hidden p-8">
+      {/* Animated Background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-400/30 via-purple-500/20 to-pink-500/20 animate-gradient-xy"></div>
+        <div className="absolute inset-0">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-white/10 animate-float"
+              style={{
+                width: `${Math.random() * 20 + 10}px`,
+                height: `${Math.random() * 20 + 10}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDuration: `${Math.random() * 10 + 5}s`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            ></div>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
             Parent-Teacher Interaction Portal
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Facilitating seamless communication between parents and teachers for better academic growth
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Elevating education through seamless communication between parents and teachers, 
+            fostering collaborative academic growth and student success.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/* Parent Card */}
-          <Link href="/login?role=parent">
-            <div className="group hover:scale-105 transition-transform duration-300 bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-purple-100 cursor-pointer">
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-xl mb-6">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-2xl font-semibold mb-4 text-gray-800">Parent Portal</h2>
-              <p className="text-gray-600">
-                Schedule meetings with teachers, submit queries, and track your child's academic progress
-              </p>
-              <div className="mt-6 inline-flex items-center text-purple-600 group-hover:text-purple-700">
-                Login as Parent
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          </Link>
+        <div className="grid md:grid-cols-2 gap-12 mt-8">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <PortalCard
+              href="/login?role=parent"
+              icon={Users}
+              title="Parent Portal"
+              description="Schedule meetings with teachers, monitor academic progress, and stay actively involved in your child's educational journey."
+              gradientFrom="purple-500"
+              gradientTo="indigo-500"
+              buttonColor="purple"
+            />
+          </motion.div>
 
-          {/* Teacher Card */}
-          <Link href="/login?role=teacher">
-            <div className="group hover:scale-105 transition-transform duration-300 bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-indigo-100 cursor-pointer">
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-xl mb-6">
-                <GraduationCap className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-2xl font-semibold mb-4 text-gray-800">Teacher Portal</h2>
-              <p className="text-gray-600">
-                Manage meeting requests, view student details, and communicate with parents effectively
-              </p>
-              <div className="mt-6 inline-flex items-center text-indigo-600 group-hover:text-indigo-700">
-                Login as Teacher
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <PortalCard
+              href="/login?role=teacher"
+              icon={GraduationCap}
+              title="Teacher Portal"
+              description="Efficiently manage parent interactions, track student progress, and create meaningful educational partnerships."
+              gradientFrom="indigo-500"
+              gradientTo="blue-500"
+              buttonColor="indigo"
+            />
+          </motion.div>
         </div>
       </div>
     </main>
   );
 }
+
