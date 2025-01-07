@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     const meetingData = await request.json();
     const newMeeting = await createMeeting(meetingData);
-    // console.log(newMeeting);
+    console.log(newMeeting);
     return NextResponse.json({ success: true, meeting: newMeeting });
   } catch (error) {
     return NextResponse.json(

@@ -58,7 +58,7 @@ export function useAuth() {
         credentials: 'include'
       });
       setUser(null);
-      router.replace('/login');
+      router.replace('/');
     } catch (error) {
       console.error('Logout failed:', error);
     }
