@@ -372,8 +372,7 @@ export default function ParentDashboard() {
                               "bg-yellow-300 text-yellow-800": meeting.status === 'pending'
                             }
                           )}>
-                            {meeting.status=== 'accept' && "Accepted"}
-                            {meeting.status=== 'rejected' || meeting.status==='pending' && meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
+                            {meeting.status=== 'accept'? 'Accepted' : meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
                           </span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
