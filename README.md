@@ -26,12 +26,12 @@ A modern web application built with Next.js 13 that facilitates seamless communi
 ## 🔒 Authentication
 
 ### Parent Login
-- Username: parent1
-- Password: pass123
+- Username: parent
+- Password: parent
 
 ### Teacher Login
-- Username: teacher1
-- Password: pass123
+- Username: teacher
+- Password: teacher
 
 ## 🚀 Tech Stack
 
