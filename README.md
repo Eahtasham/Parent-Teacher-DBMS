@@ -2,9 +2,7 @@
 
 A modern web application built with Next.js 13 that facilitates seamless communication and meeting scheduling between parents and teachers.
 
-Live Link: ```bash 
-            https://parent-teacher-dbms.vercel.app/ 
-          ```
+[Live Link](https://parent-teacher-dbms.vercel.app/)
 
 ## 🌟 Features
 
