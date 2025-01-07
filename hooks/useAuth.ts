@@ -12,12 +12,11 @@ export function useAuth() {
 
   useEffect(() => {
     let mounted = true;
-    let retryCount = 0;
-    const maxRetries = 3;
 
     const checkAuth = async () => {
       try {
         const response = await fetch('/api/auth/check', {
+          credentials: 'include',
           headers: {
             'Cache-Control': 'no-cache',
             'Pragma': 'no-cache'
@@ -26,25 +25,16 @@ export function useAuth() {
 
         if (!mounted) return;
 
-        if (!response.ok) {
-          throw new Error('Auth check failed');
-        }
-
         const data = await response.json();
 
-        if (data.user) {
+        if (response.ok && data.user) {
           setUser(data.user);
-          setLoading(false);
-        } else if (pathname !== '/login' && pathname !== '/') {
+        } else if (pathname.startsWith('/parent/') || pathname.startsWith('/teacher/')) {
           router.replace('/login');
         }
       } catch (error) {
         console.error('Auth check failed:', error);
-        
-        if (retryCount < maxRetries) {
-          retryCount++;
-          setTimeout(checkAuth, 1000); // Retry after 1 second
-        } else if (pathname !== '/login' && pathname !== '/') {
+        if (pathname.startsWith('/parent/') || pathname.startsWith('/teacher/')) {
           router.replace('/login');
         }
       } finally {
@@ -59,22 +49,14 @@ export function useAuth() {
     return () => {
       mounted = false;
     };
-  }, [router, pathname]);
+  }, [pathname, router]);
 
   const logout = async () => {
     try {
-      const response = await fetch('/api/auth/logout', { 
+      await fetch('/api/auth/logout', { 
         method: 'POST',
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
-        }
+        credentials: 'include'
       });
-
-      if (!response.ok) {
-        throw new Error('Logout failed');
-      }
-
       setUser(null);
       router.replace('/login');
     } catch (error) {
