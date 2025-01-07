@@ -3,34 +3,31 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const user = request.cookies.get('user');
+  const { pathname } = request.nextUrl;
 
-  console.log('Pathname:', request.nextUrl.pathname);
-  console.log('User cookie:', user);
+  // Handle authentication
+  try {
+    if (pathname.startsWith('/parent/dashboard') || pathname.startsWith('/teacher/dashboard')) {
+      if (!user?.value) {
+        return NextResponse.redirect(new URL('/', request.url));
+      }
 
+      const userData = JSON.parse(user.value);
+      const isParentRoute = pathname.startsWith('/parent/');
+      const isTeacherRoute = pathname.startsWith('/teacher/');
 
-  // Protect dashboard routes
-  if (request.nextUrl.pathname.startsWith('/parent/dashboard') || 
-      request.nextUrl.pathname.startsWith('/teacher/dashboard')) {
-    if (!user) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      if ((isParentRoute && userData?.role !== 'parent') || 
+          (isTeacherRoute && userData?.role !== 'teacher')) {
+        return NextResponse.redirect(new URL('/', request.url));
+      }
     }
 
-    console.log(user);
-
-    // Check correct role access
-    const userData = user.value ? JSON.parse(user.value) : null;
-    const isParentRoute = request.nextUrl.pathname.startsWith('/parent/');
-    const isTeacherRoute = request.nextUrl.pathname.startsWith('/teacher/');
-
-    
-
-    if ((isParentRoute && userData?.role !== 'parent') || 
-        (isTeacherRoute && userData?.role !== 'teacher')) {
-      return NextResponse.redirect(new URL('/', request.url));
-    }
+    return NextResponse.next();
+  } catch (error) {
+    // If there's any error parsing the cookie, redirect to login
+    console.error('Middleware error:', error);
+    return NextResponse.redirect(new URL('/', request.url));
   }
-
-  return NextResponse.next();
 }
 
 export const config = {
