@@ -13,12 +13,13 @@ export async function GET() {
         m.subject,
         p.username as parent_name,
         t.username as teacher_name,
-        s.name as student_name
+        s.name as student_name,
+        m.status as status
       FROM meetings m
       JOIN parents p ON m.parent_id = p.id
       JOIN teachers t ON m.teacher_id = t.id
       JOIN students s ON m.student_id = s.id
-      ORDER BY m.meeting_date ASC, m.meeting_time ASC
+      ORDER BY m.meeting_date DESC, m.meeting_time ASC
     `;
 
     const result = await pool.query(query);
