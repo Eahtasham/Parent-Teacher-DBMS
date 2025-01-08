@@ -208,7 +208,7 @@ export default function TeacherDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-4 md:p-8">
       {/* Header */}
-      <header className="max-w-7xl mx-auto bg-white/80 backdrop-blur-sm shadow-sm mb-5">
+      <header className="max-w-7xl mx-auto bg-white/80 backdrop-blur-sm shadow-sm mb-5 rounded-lg">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
