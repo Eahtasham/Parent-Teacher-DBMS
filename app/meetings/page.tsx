@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { cn } from '@/lib/utils';
 
 interface Meeting {
   id: number;
@@ -30,6 +31,7 @@ interface Meeting {
   parent_name: string;
   teacher_name: string;
   student_name: string;
+  status: string;
 }
 
 type SortKey = 'date' | 'subject' | 'teacher_name' | 'parent_name';
@@ -104,7 +106,7 @@ export default function MeetingsPage() {
             <CardTitle className="text-2xl font-bold dark:text-white">Scheduled Meetings</CardTitle>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <Select
+                {/* <Select
                   value={sortKey}
                   onValueChange={(value) => setSortKey(value as SortKey)}
                 >
@@ -129,7 +131,7 @@ export default function MeetingsPage() {
                     <SelectItem value="asc">Ascending</SelectItem>
                     <SelectItem value="desc">Descending</SelectItem>
                   </SelectContent>
-                </Select>
+                </Select> */}
               </div>
               <Button
                 variant="outline"
@@ -156,6 +158,7 @@ export default function MeetingsPage() {
                     <TableHead className="font-bold text-gray-900 dark:text-gray-100">Teacher</TableHead>
                     <TableHead className="font-bold text-gray-900 dark:text-gray-100">Student</TableHead>
                     <TableHead className="font-bold text-gray-900 dark:text-gray-100">Subject</TableHead>
+                    <TableHead className="font-bold text-gray-900 dark:text-gray-100">Status</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -169,6 +172,17 @@ export default function MeetingsPage() {
                       <TableCell className="dark:text-gray-300">{meeting.teacher_name}</TableCell>
                       <TableCell className="dark:text-gray-300">{meeting.student_name}</TableCell>
                       <TableCell className="dark:text-gray-300">{meeting.subject}</TableCell>
+                      <TableCell className="dark:text-gray-300">{                          <span className={cn(
+                                                  "px-3 py-1 rounded-full text-sm font-medium",
+                                                  {
+                                                    "bg-green-300 text-green-800": meeting.status === 'accept',
+                                                    "bg-red-300 text-red-800": meeting.status === 'rejected',
+                                                    "bg-yellow-300 text-yellow-800": meeting.status === 'pending'
+                                                  }
+                                                )}>
+                                                  {meeting.status=== 'accept' && "Accepted"}
+                                                  {(meeting.status=== 'rejected' || meeting.status==='pending') && meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
+                                                </span>}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
