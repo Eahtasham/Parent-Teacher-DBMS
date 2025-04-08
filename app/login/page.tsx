@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Lock, User } from 'lucide-react';
-import { toast } from 'sonner';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function LoginPage() {
   const searchParams = useSearchParams();
@@ -33,15 +33,16 @@ export default function LoginPage() {
       });
       console.log(response);
       const data = await response.json();
-      console.log(data);
+      console.log("data",data);
 
       if (data.success) {
         // router.push(role === 'parent' ? '/parent/dashboard' : '/teacher/dashboard');
         const redirectURL = role === 'parent' ? '/parent/dashboard' : '/teacher/dashboard';
         console.log('Redirecting to:', redirectURL);
+        toast.success("Authenticated, Redirecting to dashborad...")
         router.push(redirectURL);
       } else {
-        toast.error(data.message || 'Login failed');
+        toast.error(data.message || 'Login failed',data.message);
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -103,6 +104,7 @@ export default function LoginPage() {
           </form>
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   );
 }
